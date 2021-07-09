@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Movie</title>
+</head>
+<body>
+<div class="d-flex flex-nowrap">
+    <div class="order-1 p-2">
+        <div class="text-nowrap">
+            <h1 style="color: #198754;"><a>Witaj <a th:text="${user}"></a></h1>
+
+        <form th:action="@{/search-movie}" method="POST">
+            <h1 style="color: #198754;">Szukaj filmu:</h1>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default" style="background-color: #198754; color: white; width: 75px">Tytuł</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="width: 175px" th:name="title">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default" style="background-color: #198754; color: white; width: 75px" >Rok</span>
+                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="width: 175px;" th:name="year">
+            </div>
+            <a href="http://localhost:8080/movies"><input class="btn btn-outline-success" type="submit" name="search" style="width: 75px" value="Szukaj"></a>
+            <a href="http://localhost:8080/movies"><input class="btn btn-outline-success" type="submit" name="add" style="width: 175px" value="Dodaj do ulubionych"></a>
+        </form>
+        </div>
+    </div>
+    <div class="order-2 p-2">
+        <h1 style="color: #198754;">Znaleziony film: </h1>
+        <table class="table table-success table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Tytuł</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Gatunek</th>
+                    <th scope="col">Reżyser</th>
+                    <th scope="col">Plakat</th>
+                </tr>
+            <thead>
+            <tbody>
+                <tr th:each="movie: ${movies}">
+                    <th scope="row" th:text="${movie.getTitle()}"/></th>
+                    <td th:text="${movie.getPlot()}"/>
+                    <td th:text="${movie.getGenre()}"/>
+                    <td th:text="${movie.getDirector()}"/>
+                    <td><img th:src="@{${movie.getPoster()}}"/></td>
+                </tr>
+        </table>
+
+    </div>
+
+    <div class="order-3 p-2">
+        <h1 style="color: #198754;">Ulubione filmy:</h1>
+        <table class="table table-success table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Gatunek</th>
+                <th scope="col">Reżyser</th>
+                <th scope="col">Plakat</th>
+            </tr>
+            <thead>
+            <tbody>
+            <tr th:object="${userMovies}">
+            <tr th:each="favoriteMovie: ${userMovies.getFavoriteMovies()}">
+                <th scope="row" th:text="${favoriteMovie.getTitle()}"/></th>
+                <td th:text="${favoriteMovie.getPlot()}"/>
+                <td th:text="${favoriteMovie.getGenre()}"/>
+                <td th:text="${favoriteMovie.getDirector()}"/>
+                <td><img th:src="@{${favoriteMovie.getPoster()}}"/></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
