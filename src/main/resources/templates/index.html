@@ -27,6 +27,10 @@
             <a href="http://localhost:8080/movies"><input class="btn btn-outline-success" type="submit" name="search" style="width: 75px" value="Szukaj"></a>
             <a href="http://localhost:8080/movies"><input class="btn btn-outline-success" type="submit" name="add" style="width: 175px" value="Dodaj do ulubionych"></a>
         </form>
+            <form th:action="@{/logout}">
+                <br>
+                <a href="http://localhost:8080/logout"><input class="btn btn-outline-success" type="submit"  style="width: 250px" value="Wyloguj"></a>
+            </form>
         </div>
     </div>
     <div class="order-2 p-2">
